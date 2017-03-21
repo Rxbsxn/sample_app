@@ -60,4 +60,11 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     assert_equal mixed_case_email.downcase, @user.reload.email
   end
+
+  test 'mixed case email shouldnt be save' do
+    mixed_case_email = "fOo@EXsame.com"
+    @user.email = mixed_case_email
+    @user.save
+    assert_not_equal mixed_case_email, @user.reload.email
+  end
 end
