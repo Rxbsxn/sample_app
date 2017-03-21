@@ -67,4 +67,14 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     assert_not_equal mixed_case_email, @user.reload.email
   end
+
+  test 'user password is bad when it is nil' do
+    @user.password = @user.password_confirmation = ''
+    assert_not @user.valid?
+  end
+
+  test 'user not valid if password too short' do
+    @user.password = @user.password_confirmation = '4' * 5
+    assert_not @user.valid?
+  end
 end
